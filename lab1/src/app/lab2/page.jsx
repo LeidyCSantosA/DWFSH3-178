@@ -22,7 +22,7 @@ export default function Lab2() {
             <h2>Datos obtenidos del servicio:</h2>
             <ul>
                 {
-                    valueData.map((item, index) => <li key={item.id}>{item.title}{item.body}</li>)
+                    valueData.map((item, index) => <li key={item.id}>{item.title}<br/>{item.body}</li>)
                 }
             </ul>
         </div>
