@@ -4,12 +4,16 @@ import { useState } from "react"
 
 export default function Lab1() {
     const title = <h1>Formulario</h1>
-    // Campos del formulario
+    // Fields
     let [fullName, setFullName] = useState();
+    let [email, setEmail] = useState();
+    let [userName, setUserName] = useState();
+    let [password, setPassword] = useState();
+    // Event submit
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(`fullName: ${fullName}`);
     };
+    // Event onChange
     const onChange = (event, setValue) => setValue(event.target.value);
     return (
         <div>
@@ -20,6 +24,20 @@ export default function Lab1() {
                     name="fullName"
                     type="text"
                     onChange={(event) => onChange(event, setFullName)}
+                />
+                <br/>
+                <label>Email</label>
+                <input
+                    name="email"
+                    type="email"
+                    onChange={(event) => onChange(event, setEmail)}
+                />
+                <br/>
+                <label>Username</label>
+                <input
+                    name="userName"
+                    type="text"
+                    onChange={(event) => onChange(event, setUserName)}
                 />
                 <input type="submit" value="Enviar" />
             </form>
