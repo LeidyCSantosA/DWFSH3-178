@@ -1,20 +1,32 @@
 "use client";
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useFormHook } from "../../hooks/form-hook";
 
 export default function Lab1() {
     const title = <h1>Formulario</h1>
     // Fields
-    let [fullName, setFullName] = useState();
-    let [email, setEmail] = useState();
-    let [userName, setUserName] = useState();
-    let [password, setPassword] = useState();
+    const { value: valueFullName, bind: bindFullName, reset: resetFullName } = useFormHook();
+    const { value: valueEmail, bind: bindEmail, reset: resetEmail } = useFormHook();
+    const { value: valueUserName, bind: bindUserName, reset: resetUserName } = useFormHook();
+    const { value: valuePassword, bind: bindPassword, reset: resetPassword } = useFormHook();
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        localStorage.setItem('items', JSON.stringify(items));
+    }, [items]);
     // Event submit
     const handleSubmit = (event) => {
         event.preventDefault();
+        // create object
+        const dataUser = {
+            fullName: valueFullName,
+            email: valueEmail,
+            username: valueUserName,
+            password: valuePassword
+        }
+        setItems(prevItems => [...prevItems, dataUser]);
     };
-    // Event onChange
-    const onChange = (event, setValue) => setValue(event.target.value);
     return (
         <div>
             {title}
@@ -23,23 +35,33 @@ export default function Lab1() {
                 <input
                     name="fullName"
                     type="text"
-                    onChange={(event) => onChange(event, setFullName)}
+                    {...bindFullName}
                 />
-                <br/>
+                <br />
                 <label>Email</label>
                 <input
                     name="email"
                     type="email"
-                    onChange={(event) => onChange(event, setEmail)}
+                    {...bindEmail}
                 />
-                <br/>
+                <br />
                 <label>Username</label>
                 <input
                     name="userName"
                     type="text"
-                    onChange={(event) => onChange(event, setUserName)}
+                    {...bindUserName}
                 />
+                <br />
+                <label>Password</label>
+                <input
+                    name="password"
+                    type="text"
+                    {...bindPassword}
+                />
+                <br />
                 <input type="submit" value="Enviar" />
+                <br />
+                <span>Los datos ingresados son: {JSON.stringify(items)}</span>
             </form>
         </div>
     )
